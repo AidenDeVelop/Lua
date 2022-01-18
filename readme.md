@@ -18,8 +18,7 @@ Any information about me you can find at my github profile [link](https://github
 
 <h2 align = "center">Links</h2>
 
-[Discord Main](https://discord.gg/ppRjmhGvtD)<br>
-[Discord Second](https://discord.gg/9vG8UJXuNf)<br>
+[xlp Discord](https://discord.gg/9vG8UJXuNf)<br>
 ~~Youtube~~ _(currently down)_<br>
 [Twitter](https://twitter.com/not_weuz)<br>
 [VK](https://vk.com/not_weuz)
