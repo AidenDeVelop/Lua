@@ -240,7 +240,7 @@ end
 function farm(trying)
     if kocmoc.toggles.loopfarmspeed then game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = kocmoc.vars.farmspeed end
     api.humanoid():MoveTo(trying.Position) 
-    repeat task.wait() until (trying.Position-api.humanoidrootpart().Position).magnitude <=4 or not IsToken(trying) or temptable.coconut
+    repeat task.wait() until (trying.Position-api.humanoidrootpart().Position).magnitude <=3 or not IsToken(trying) or temptable.coconut
 end
 
 function disableall()
