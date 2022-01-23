@@ -17,7 +17,7 @@ local hi = false
 -- Script tables
 
 local temptable = {
-    version = "2.12.0",
+    version = "2.12.1",
     blackfield = "Ant Field",
     redfields = {},
     bluefields = {},
@@ -228,19 +228,10 @@ local defaultkocmoc = kocmoc
 
 function statsget() local StatCache = require(game.ReplicatedStorage.ClientStatCache) local stats = StatCache:Get() return stats end
 function rtsg() tab = game.ReplicatedStorage.Events.RetrievePlayerStats:InvokeServer() return tab end
-
-function aboba()
-    done = false
-    api.humanoid().MoveToFinished:Connect(function() done=true end)
-    return function()
-        return done
-    end
-end
-
 function farm(trying)
     if kocmoc.toggles.loopfarmspeed then game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = kocmoc.vars.farmspeed end
     api.humanoid():MoveTo(trying.Position) 
-    repeat task.wait() until (trying.Position-api.humanoidrootpart().Position).magnitude <=3 or not IsToken(trying) or temptable.coconut
+    repeat task.wait() until (trying.Position-api.humanoidrootpart().Position).magnitude <=4 or not IsToken(trying)
 end
 
 function disableall()
@@ -432,9 +423,8 @@ function getballoons()
     for i,v in next, game:GetService("Workspace").Balloons.FieldBalloons:GetChildren() do
         if v:FindFirstChild("BalloonRoot") and v:FindFirstChild("PlayerName") then
             if v:FindFirstChild("PlayerName").Value == game.Players.LocalPlayer.Name then
-                if temptable.running == false and tonumber((v.BalloonRoot.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude) < temptable.magnitude/1.4 then
-                    farm(v.BalloonRoot)
-                    break
+                if tonumber((v.BalloonRoot.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude) < temptable.magnitude/1.4 then
+                    api.walkTo(v.BalloonRoot.Position)
                 end
             end
         end
@@ -456,9 +446,8 @@ end
 function getcloud()
     for i,v in next, game:GetService("Workspace").Clouds:GetChildren() do
         e = v:FindFirstChild("Plane")
-        if e and temptable.running == false and tonumber((e.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude) < temptable.magnitude/1.4 then
-            farm(e)
-            break
+        if e and tonumber((e.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude) < temptable.magnitude/1.4 then
+            api.walkTo(e.Position)
         end
     end
 end
@@ -802,11 +791,13 @@ game.Workspace.Particles.ChildAdded:Connect(function(v)
     if v.Name == "WarningDisk" and not temptable.started.vicious and kocmoc.toggles.autofarm and kocmoc.toggles.farmcoco and (v.Position-api.humanoidrootpart().Position).magnitude < temptable.magnitude and not temptable.converting then
         table.insert(temptable.coconuts, v)
         getcoco(v)
+        gettoken()
     elseif v.Name == "Crosshair" and v ~= nil and v.BrickColor ~= BrickColor.new("Forest green") and v.BrickColor ~= BrickColor.new("Flint") and (v.Position-api.humanoidrootpart().Position).magnitude < temptable.magnitude and kocmoc.toggles.autofarm and kocmoc.toggles.collectcrosshairs and not temptable.converting then
         while check(v) do
             task.wait()
             api.walkTo(v.Position)
         end
+        gettoken()
     end
 end)
 
