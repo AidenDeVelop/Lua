@@ -17,7 +17,7 @@ local hi = false
 -- Script tables
 
 local temptable = {
-    version = "2.12.1",
+    version = "2.12.2",
     blackfield = "Ant Field",
     redfields = {},
     bluefields = {},
@@ -231,7 +231,7 @@ function rtsg() tab = game.ReplicatedStorage.Events.RetrievePlayerStats:InvokeSe
 function farm(trying)
     if kocmoc.toggles.loopfarmspeed then game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = kocmoc.vars.farmspeed end
     api.humanoid():MoveTo(trying.Position) 
-    repeat task.wait() until (trying.Position-api.humanoidrootpart().Position).magnitude <=3 or not IsToken(trying)
+    repeat task.wait() until (trying.Position-api.humanoidrootpart().Position).magnitude <=4 or not IsToken(trying) or not temptable.running
 end
 
 function disableall()
@@ -292,9 +292,10 @@ function makesprinklers()
         e = 4
     end
     for i = 1, e do
-        if e ~= 1 then api.humanoid().Jump = true task.wait(.4) end
+        k = api.humanoid().JumpPower
+        if e ~= 1 then api.humanoid().JumpPower = 70 api.humanoid().Jump = true task.wait(.2) end
         game.ReplicatedStorage.Events.PlayerActivesCommand:FireServer({["Name"] = "Sprinkler Builder"})
-        task.wait(1)
+        if e ~= 1 then api.humanoid().JumpPower = k task.wait(1) end
     end
 end
 
@@ -1141,6 +1142,17 @@ for _,v in next, game.workspace.Collectibles:GetChildren() do
         v:Destroy()
     end
 end 
+
+task.spawn(function() while task.wait() do
+    pos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+    task.wait(0.00001)
+    currentSpeed = (pos-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude
+    if currentSpeed > 0 then
+        temptable.running = true
+    else
+        temptable.running = false
+    end
+end end)
 
 for _, part in next, workspace:FindFirstChild("FieldDecos"):GetDescendants() do if part:IsA("BasePart") then part.CanCollide = false part.Transparency = part.Transparency < 0.5 and 0.5 or part.Transparency task.wait() end end
 for _, part in next, workspace:FindFirstChild("Decorations"):GetDescendants() do if part:IsA("BasePart") and (part.Parent.Name == "Bush" or part.Parent.Name == "Blue Flower") then part.CanCollide = false part.Transparency = part.Transparency < 0.5 and 0.5 or part.Transparency task.wait() end end
