@@ -1,3 +1,4 @@
+repeat task.wait() until game:IsLoaded()
 -- API CALLS
 
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/not-weuz/Lua/main/bracketv3.lua"))()
