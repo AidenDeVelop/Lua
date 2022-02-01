@@ -372,8 +372,7 @@ function killmobs()
                 else
                     monsterpart = v.Territory.Value
                 end
-                api.tween(1,monsterpart.CFrame)
-                task.wait(1)
+                api.humanoidrootpart().CFrame = monsterpart.CFrame
                 repeat api.humanoidrootpart().CFrame = monsterpart.CFrame avoidmob() task.wait(1) until v:FindFirstChild("TimerLabel", true).Visible
                 for i = 1, 4 do gettoken(monsterpart.Position) end
             end
@@ -646,15 +645,12 @@ function makequests()
                     api.tween(2,CFrame.new(v.Platform.Position.X, v.Platform.Position.Y+3, v.Platform.Position.Z))
                     task.wait(3)
                 end
-                for b,z in next, getconnections(button) do
-                    z.Function()
-                end
+                for b,z in next, getconnections(button) do    z.Function()    end
                 task.wait(8)
                 if image.ImageTransparency == 0 then
-                    for b,z in next, getconnections(button) do
-                        z.Function()
-                    end
+                    for b,z in next, getconnections(button) do    z.Function()    end
                 end
+                task.wait(2)
             end
         end     
     end end end end end
